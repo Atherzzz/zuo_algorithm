@@ -32,11 +32,6 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        Map<String, Integer> m1 = new TreeMap<String, Integer>();
-        for (Map.Entry<String, Integer> entry : m1.entrySet()) {
-            System.out.println(entry.getKey() + "  " + entry.getValue());
-            }
-
         Scanner sc = new Scanner(System.in);
         System.out.println("Please input the amount of people:");
         while(sc.hasNextLine()){
@@ -51,8 +46,7 @@ public class Main {
                 int score = Integer.parseInt(arr_name[1]);
                 m1.put(arr_name[0], score);
             }
-            sort(m1, sorting)
+            sort(m1, sorting);
             }
         }
     }
-}
