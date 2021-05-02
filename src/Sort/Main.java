@@ -50,6 +50,11 @@ public class Main {
         return arr1;
     }
 
+    /**
+     * 插入排序
+     * @param arr1
+     * @return
+     */
     public static int[] insert_sort(int[] arr1){
         for(int i =0; i < arr1.length; i++){
             int temp = i ;
@@ -66,10 +71,68 @@ public class Main {
         return arr1;
     }
 
+    public static int[] Shell_Sort(int[] arr1){
+        int gap = arr1.length;
+        while(gap!=0){
+            gap = gap/2;
+            for(int i =gap; i < arr1.length;  i++){
+                int j = i;
+                while(j - gap>=0 && arr1[j] < arr1[j - gap] ){
+                    swap(j, j-gap, arr1);
+                    j = j - gap;
+                }
+                }
+            }
 
+        return  arr1;
+        }
+
+
+    public static int[] Merge_Sort(int[] arr1){
+        process(arr1, 0, arr1.length-1);
+        return arr1;
+    }
+
+    /**
+     *
+     * @param arr input matrix
+     * @param L strat point
+     * @param R end point
+     * 经典的递归方法
+     * 格式函数A
+     *          基础项
+     *          函数A
+     *          函数A
+     *          函数B
+     */
+
+    public static void process(int[] arr, int L, int R){
+        if (L==R){
+            return;
+        }
+        int M = L + (R-L)/2;
+        process(arr, L, M);
+        process(arr, M+1, R);
+        merge(arr, L, M, R);
+    }
+
+
+    public static void  merge(int[] arr, int L, int M, int R){
+        int[] help = new int[R - L + 1];
+        int j = 0;
+        int pointer1 = L;
+        int pointer2 = M +1;
+        while(pointer1 <= M && pointer2 <= R){
+            help[j++] = arr[pointer1]<= arr[pointer2]? arr[pointer1++]: arr[pointer2++];}
+        while( pointer2 <= R){help[j++] = arr[pointer2++];}
+        while(pointer1 <= M ){help[j++] = arr[pointer1++];}
+        for (int i = 0; i < help.length; i ++ ){
+            arr[L+i] = help[i];
+        }
+    }
     public static void main(String[] args) {
         int[] arr1 = new int[]{2, 5, 3, 4, 3, 2, 1};
-        arr1 = insert_sort(arr1);
+        arr1 = Merge_Sort(arr1);
         for(int i = 0; i<arr1.length;i++)
             System.out.println(arr1[i]);
 
