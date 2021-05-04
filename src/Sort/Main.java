@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Main {
+
     /**
      * 交换列表arr1中num1位置和num2位置的值（注意两个nun要不同，所以用之前判断一下）
      * @param num1: 第一个位置
@@ -94,7 +95,7 @@ public class Main {
     }
 
     /**
-     *
+     *归并排序
      * @param arr input matrix
      * @param L strat point
      * @param R end point
@@ -130,11 +131,82 @@ public class Main {
             arr[L+i] = help[i];
         }
     }
-    public static void main(String[] args) {
-        int[] arr1 = new int[]{2, 5, 3, 4, 3, 2, 1};
-        arr1 = Merge_Sort(arr1);
-        for(int i = 0; i<arr1.length;i++)
-            System.out.println(arr1[i]);
 
+    /**
+     * 快速排序
+     * @param arr1
+     */
+    public static void quick_sort(int[] arr1){
+        int L = 0;
+        int R = arr1.length -1;
+        quick_sort(arr1, L, R);
+    }
+    public static void quick_sort(int[] arr1, int L, int R){
+        if(L<R){
+            swap(R, L+ (int)(Math.random()*(R - L + 1)), arr1);
+            int[] p = partation(arr1, L, R);
+            quick_sort(arr1, L, p[0] -1);
+            quick_sort(arr1, p[1]+1, R);
+        }
+    }
+    public static int[] partation(int[] arr1, int L, int R){
+        int less = L -1;
+        int more = R;
+        while(L<more){
+            if(arr1[L]< arr1[R]){
+                swap(L, less+1, arr1);
+                L++;
+                less++;}
+            else if(arr1[L] == arr1[R]){
+                L++;
+                }
+            else{
+                swap(L, more-1, arr1);
+                more--;
+            }
+            }
+        swap(more, R, arr1);
+        return new int[] { less+1, more};
+        }
+
+    /**
+     * 堆排序
+     * @param arr1
+     * @param index
+     */
+    public static void heapinsert(int[] arr1, int index){
+        while(arr1[index]> arr1[(index-1)/2]){
+            swap(index, (index-1)/2, arr1);
+            index = (index-1)/2;
+        }
+    }
+    public static void heapify(int[] arr1, int index, int heapsize){
+        int left = 2*index + 1;
+        while(left < heapsize){
+            int largest = 0;
+            if(left+1 < heapsize){ largest = arr1[left]<arr1[left+1]? left+1: left; }
+            else{ largest = left;}
+            if(arr1[index]< arr1[largest]){swap(index, largest, arr1);}
+            else{break;}
+            index = largest;
+            left = 2*index + 1;
+        }
+    }
+    public static void heap(int[] arr1, int heapsize){
+        for(int i = 1; i< heapsize; i++){ heapinsert(arr1, i); }
+    }
+    public static void heap_sort(int[] arr1){
+        heap(arr1, arr1.length);
+        for(int end = arr1.length; end!=1; end--){
+            swap(0, end-1, arr1);
+            heapify(arr1, 0, end-1);
+        }
+    }
+    public static void main(String[] args) {
+        int[] arr1 = {12,7,7,8,8,10};
+        heap_sort(arr1);
+        for(int i : arr1){
+            System.out.println(i);
+        }
         }
 }
